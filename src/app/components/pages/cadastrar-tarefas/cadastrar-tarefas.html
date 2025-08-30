@@ -2,12 +2,13 @@
 <p>Preencha os campos e inclua uma tarefa em sua agenda.</p>
 <hr />
 
-<div *ngIf="message() != ''" class="alert alert-secondary alert-dismissible" role="alert">
+<div *ngIf="message() != ''" class="alert alert-secondary alert-dismissible fade show">
     <strong>{{ message() }}</strong>
-    <button type="button" class="btn-close" (click)="message.set('')"></button>
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
 </div>
 
 <form [formGroup]="formCadastro" (ngSubmit)="cadastrarTarefa()">
+    
     <div class="mb-3">
         <label>Nome da tarefa:</label>
         <input type="text" class="form-control" formControlName="name" />
@@ -15,6 +16,7 @@
             O nome da tarefa é obrigatório e deve ter pelo menos 8 caracteres.
         </div>
     </div>
+
     <div class="mb-3">
         <label >Data da tarefa:</label>
         <input type="date" class="form-control" formControlName="date" />
