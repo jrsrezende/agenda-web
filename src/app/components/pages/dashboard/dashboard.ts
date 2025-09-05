@@ -1,11 +1,80 @@
-import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
+import { Component, inject, signal } from '@angular/core';
+import { Chart, ChartModule } from 'angular-highcharts';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [],
+  imports: [CommonModule, ChartModule],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css'
 })
 export class Dashboard {
 
+  private http = inject(HttpClient);
+
+  columnChart = signal<Chart | null>(null);
+  donutChart = signal<Chart | null>(null);
+
+  ngOnInit() {
+    this.http.get(environment.apiTasks + "/groupby-priority").subscribe((response) => {
+
+      const categories: string[] = [];
+      const values: number[] = [];
+
+      (response as any[]).forEach(item => {
+        categories.push(item.priority);
+        values.push(item.tasksQuantity);
+      });
+
+      this.columnChart.set(new Chart({
+        chart: { type: 'column' },
+        title: { text: 'Quantidade de tarefas por prioridade' },
+        subtitle: { text: 'Contagem de tarefas da agenda separados por prioridade.' },
+        xAxis: {
+          categories: categories,
+          crosshair: true,
+          title: { text: 'Prioridade da Tarefa' }
+        },
+        yAxis: {
+          min: 0,
+          title: { text: 'Quantidade' }
+        },
+        plotOptions: {
+          column: {
+            borderRadius: 5,
+            pointPadding: 0.2,
+            borderWidth: 0
+          }
+        },
+        series: [{ name: 'Tarefas', type: 'column', data: values }],
+        legend: { enabled: false },
+        credits: { enabled: false }
+      }));
+    });
+
+    this.http.get(environment.apiTasks + "/groupby-category").subscribe((response) => {
+
+      const content: any[] = [];
+      (response as any[]).forEach(item => {
+        content.push([item.categoryName, item.tasksQuantity]);
+      });
+
+      this.donutChart.set(new Chart({
+        chart: { type: 'pie' },
+        title: { text: 'Quantidade de tarefas por categoria.' },
+        subtitle: { text: 'Contagem de tarefas da agenda separados por categoria.' },
+        plotOptions: {
+          pie: {
+            innerSize: '50%',
+            dataLabels: { enabled: true }
+          }
+        },
+        series: [{ data: content, type: 'pie', name: 'Tarefas' }],
+        legend: { enabled: false },
+        credits: { enabled: false },
+      }));
+    });
+  }
 }

@@ -20,7 +20,7 @@ export class CadastrarTarefas {
     categoryId: new FormControl('', [Validators.required]),
   });
   private initialValue = this.formCadastro.value;
-  
+
   private http = inject(HttpClient);
 
   ngOnInit() {

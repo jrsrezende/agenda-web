@@ -1,3 +1,11 @@
-<h4>Dashboard principal</h4> 
-<p>Seja bem vindo ao sistema de agenda de tarefas.</p> 
-<hr/> 
+<h4>Dashboard principal</h4>
+<p>Seja bem vindo ao sistema de agenda de tarefas.</p>
+<hr />
+<div class="row mt-5">
+    <div class="col-md-6" *ngIf="columnChart() as chart">
+        <div [chart]="chart"></div>
+    </div>
+    <div class="col-md-6" *ngIf="donutChart() as chart">
+        <div [chart]="chart"></div>
+    </div>
+</div>
