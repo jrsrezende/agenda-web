@@ -1,0 +1,60 @@
+<h4>Task Registration Form</h4>
+<p>Fill in the fields and add a task to your agenda.</p>
+<hr />
+
+<div *ngIf="message() != ''" class="alert alert-secondary alert-dismissible">
+  <strong>{{ message() }}</strong>
+  <button type="button" class="btn-close" (click)="message.set('')"></button>
+</div>
+
+<form [formGroup]="formCadastro" (ngSubmit)="registerTask()">
+  <div class="mb-3">
+    <label>Task name:</label>
+    <input type="text" class="form-control" formControlName="name" />
+    <div class="text-danger" *ngIf="formCadastro.get('name')?.touched && formCadastro.get('name')?.invalid">
+      The task name is required and must have at least 8 characters.
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <label>Task date:</label>
+    <input type="date" class="form-control" formControlName="date" />
+    <div class="text-danger" *ngIf="formCadastro.get('date')?.touched && formCadastro.get('date')?.invalid">
+      The task date is required.
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <label>Task priority:</label>
+    <select class="form-select" formControlName="priority">
+      <option value="" hidden>Select an option</option>
+      <option value="LOW">Low priority</option>
+      <option value="MEDIUM">Medium priority</option>
+      <option value="HIGH">High priority</option>
+    </select>
+    <div class="text-danger" *ngIf="formCadastro.get('priority')?.touched && formCadastro.get('priority')?.invalid">
+      The task priority is required.
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <label>Task category:</label>
+    <select class="form-select" formControlName="categoryId">
+      <option value="" disabled hidden>Select an option</option>
+      <option *ngFor="let item of categories()" value="{{ item.id }}">{{ item.name }}</option>
+    </select>
+    <div class="text-danger" *ngIf="formCadastro.get('categoryId')?.touched && formCadastro.get('categoryId')?.invalid">
+      The task category is required.
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <input
+      type="submit"
+      class="btn"
+      [ngClass]="{ 'btn-success': formCadastro.valid, 'btn-secondary': formCadastro.invalid }"
+      [disabled]="formCadastro.invalid"
+      value="Register task"
+    />
+  </div>
+</form>
