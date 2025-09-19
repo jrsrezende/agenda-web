@@ -1,5 +1,7 @@
+import { Route, Routes } from '@angular/router';
 import { Dashboard } from './components/pages/dashboard/dashboard';
 import { RegisterTasks } from './components/pages/register-tasks/register-tasks';
+import { SearchTasks } from './components/pages/search-tasks/search-tasks';
 
 export const routes: Routes = [
     {
