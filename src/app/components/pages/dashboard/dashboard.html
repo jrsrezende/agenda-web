@@ -1,0 +1,11 @@
+<h4>Main Dashboard</h4>
+<p>Welcome to the task management system.</p>
+<hr />
+<div class="row mt-5">
+    <div class="col-md-6" *ngIf="columnChart() as chart">
+        <div [chart]="chart"></div>
+    </div>
+    <div class="col-md-6" *ngIf="donutChart() as chart">
+        <div [chart]="chart"></div>
+    </div>
+</div>
