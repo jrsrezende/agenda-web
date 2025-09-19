@@ -1,0 +1,56 @@
+<h4>Task Search</h4>
+<p>Select the desired date range to view the tasks in the schedule.</p>
+<hr />
+
+<form [formGroup]="formConsulta" (ngSubmit)="searchTasks()">
+    <div class="row">
+        <div class="col">
+            <input type="date" class="form-control" formControlName="minDate" />
+            <div class="text-danger" *ngIf="formConsulta.get('minDate')?.touched && formConsulta.get('minDate')?.invalid">
+                The minimum date is required.
+            </div>
+        </div>
+        <div class="col">
+            <input type="date" class="form-control" formControlName="maxDate" />
+            <div class="text-danger" *ngIf="formConsulta.get('maxDate')?.touched && formConsulta.get('maxDate')?.invalid">
+                The maximum date is required.
+            </div>
+        </div>
+        <div class="col">
+            <input type="submit" class="btn btn-success" value="Search tasks" [ngClass]="{'btn-success': formConsulta.valid, 'btn-secondary': formConsulta.invalid}" [disabled]="formConsulta.invalid" />
+        </div>
+    </div>
+</form>
+
+<table class="table table-striped table-hover" *ngIf="tasks().length > 0">
+    <thead>
+        <tr>
+            <th>Task name</th>
+            <th>Date</th>
+            <th>Priority</th>
+            <th>Completed</th>
+            <th>Category</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of tasks()">
+            <td>{{ item.name }}</td>
+            <td>{{ item.date | date: 'MM/dd/yyyy' }}</td>
+            <td>{{ item.priority }}</td>
+            <td>
+                <div *ngIf="item.finished" class="badge bg-success">
+                    YES
+                </div>
+                <div *ngIf="!item.finished" class="badge bg-danger">
+                    NO
+                </div>
+            </td>
+            <td>{{ item.category.name }}</td>
+            <td>
+                <button class="btn btn-outline-primary btn-sm me-1">Edit</button>
+                <button class="btn btn-outline-danger btn-sm me-1" (click)="deleteTask(item.id)">Delete</button>
+            </td>
+        </tr>
+    </tbody>
+</table>

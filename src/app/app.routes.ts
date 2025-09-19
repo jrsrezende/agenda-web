@@ -11,6 +11,10 @@ export const routes: Routes = [
         component: RegisterTasks
     },
     {
+        path: 'pages/search-tasks',
+        component: SearchTasks
+    },
+    {
         path: '', pathMatch: 'full', redirectTo: 'pages/dashboard'
     }
 ];
