@@ -3,10 +3,11 @@ import { HttpClient } from '@angular/common/http';
 import { Component, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { environment } from '../../../../environments/environment';
+import { Navbar } from '../../shared/navbar/navbar';
 
 @Component({
   selector: 'app-search-tasks',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, Navbar],
   templateUrl: './search-tasks.html',
   styleUrl: './search-tasks.css',
 })
@@ -25,7 +26,6 @@ export class SearchTasks {
     const dataMax = this.formConsulta.value.maxDate;
     this.http.get(environment.apiTasks + '/' + dataMin + '/' + dataMax).subscribe({
       next: (response) => {
-        console.table(response);
         this.tasks.set(response as any[]);
       },
       error: (e) => {

@@ -3,10 +3,11 @@ import { HttpClient } from '@angular/common/http';
 import { Component, inject, signal } from '@angular/core';
 import { Chart, ChartModule } from 'angular-highcharts';
 import { environment } from '../../../../environments/environment';
+import { Navbar } from '../../shared/navbar/navbar';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [CommonModule, ChartModule],
+  imports: [CommonModule, ChartModule, Navbar],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css'
 })
@@ -29,7 +30,9 @@ export class Dashboard {
       });
 
       this.columnChart.set(new Chart({
-        chart: { type: 'column' },
+        chart: { type: 'column',
+          backgroundColor: 'transparent'
+        },
         title: { text: 'Number of tasks by priority' },
         subtitle: { text: 'Task count in the agenda separated by priority.' },
         xAxis: {
@@ -62,7 +65,9 @@ export class Dashboard {
       });
 
       this.donutChart.set(new Chart({
-        chart: { type: 'pie' },
+        chart: { type: 'pie',
+          backgroundColor: 'transparent'
+         },
         title: { text: 'Number of tasks by category' },
         subtitle: { text: 'Task count in the agenda separated by category.' },
         plotOptions: {
