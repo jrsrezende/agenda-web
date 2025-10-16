@@ -5,7 +5,7 @@
 
     <hr />
 
-    <div *ngIf="errorMessage() != ''" class="alert alert-danger alert-dismissible rounded-pill">
+    <div *ngIf="errorMessage() != ''" class="alert alert-danger alert-dismissible rounded-pill" style="text-align: center;">
       <strong>{{ errorMessage() }}</strong>
       <button type="button" class="btn-close" aria-label="Close" (click)="errorMessage.set('')"></button>
     </div>

@@ -7,8 +7,8 @@
       <p class="text-center text-muted mb-4">Fill in the fields and add a task to your agenda.</p>
       <hr />
 
-      <div *ngIf="message() != ''" class="alert alert-secondary alert-dismissible rounded-pill">
-        <strong>{{ message() }}</strong>
+      <div *ngIf="message() != ''" class="alert alert-info alert-dismissible rounded-pill" style="text-align: center;">
+        <strong >{{ message() }}</strong>
         <button type="button" class="btn-close" aria-label="Close" (click)="message.set('')"></button>
       </div>
 

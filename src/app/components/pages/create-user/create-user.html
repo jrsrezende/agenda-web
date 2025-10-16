@@ -5,12 +5,12 @@
 
     <hr />
 
-    <div *ngIf="successMessage() != ''" class="alert alert-info alert-dismissible rounded-pill">
+    <div *ngIf="successMessage() != ''" class="alert alert-info alert-dismissible rounded-pill" style="text-align: center;">
       <strong>{{ successMessage() }}</strong>
       <button type="button" class="btn-close" (click)="successMessage.set('')"></button>
     </div>
 
-    <div *ngIf="errorMessage() != ''" class="alert alert-danger alert-dismissible rounded-pill">
+    <div *ngIf="errorMessage() != ''" class="alert alert-danger alert-dismissible rounded-pill" style="text-align: center;">
       <strong>{{ errorMessage() }}</strong>
       <button type="button" class="btn-close" (click)="errorMessage.set('')"></button>
     </div>
