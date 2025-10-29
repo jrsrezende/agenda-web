@@ -1,9 +1,16 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, inject, signal } from '@angular/core';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { environment } from '../../../../environments/environment';
 import { Navbar } from '../../shared/navbar/navbar';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-search-tasks',
@@ -14,6 +21,7 @@ import { Navbar } from '../../shared/navbar/navbar';
 export class SearchTasks {
   tasks = signal<any[]>([]);
 
+  private router = inject(Router);
   private http = inject(HttpClient);
 
   formConsulta = new FormGroup({
@@ -28,11 +36,20 @@ export class SearchTasks {
       next: (response) => {
         this.tasks.set(response as any[]);
       },
-      error: (e) => {
-        console.log(e.error);
-      },
     });
   }
+
+  editTask(item: any): void {
+    this.router.navigate(['/pages/edit-tasks', item.id], {
+      queryParams: {
+        taskName: item.name,
+        taskDate: item.date,
+        taskPriority: item.priority,
+        taskCategory: item.categoryId,
+        taskFinished: item.finished
+      },
+    });
+  };
 
   deleteTask(id: string) {
     if (confirm('Do you really want to delete the task?')) {
@@ -41,10 +58,7 @@ export class SearchTasks {
           alert(response);
           this.searchTasks();
         },
-        error: (e) => {
-          console.log(e.error);
-        },
       });
-    }
-  }
+    };
+  };
 }

@@ -1,15 +1,21 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, inject, signal } from '@angular/core';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { environment } from '../../../../environments/environment';
 import { Navbar } from '../../shared/navbar/navbar';
 
 @Component({
   selector: 'app-register-tasks',
-  imports: [CommonModule,FormsModule, ReactiveFormsModule, Navbar],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, Navbar],
   templateUrl: './register-tasks.html',
-  styleUrl: './register-tasks.css'
+  styleUrl: './register-tasks.css',
 })
 export class RegisterTasks {
   categories = signal<any[]>([]);
@@ -33,14 +39,21 @@ export class RegisterTasks {
   }
 
   registerTask() {
-    this.http.post(environment.apiTasks, this.formCadastro.value, { responseType: 'text' }).subscribe({
-      next: (response) => {
-        this.formCadastro.reset(this.initialValue);
-        this.message.set(response);
-      },
-      error: (e) => {
-        this.message.set('Error registering the task: ' + e.error);
-      }
-    });
+    this.http
+      .post(environment.apiTasks, this.formCadastro.value)
+      .subscribe({
+        next: () => {
+          this.formCadastro.reset(this.initialValue);
+          this.message.set("Task successfully registered!");
+        },
+        error: (e) => {
+          if (e.status === 0) {
+            // Servidor não está respondendo
+            this.message.set('Error connecting to the server');
+          } else {
+            this.message.set('An unexpected error occurred');
+          }
+        },
+      });
   }
 }

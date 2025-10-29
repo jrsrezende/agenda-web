@@ -5,6 +5,7 @@ import { SearchTasks } from './components/pages/search-tasks/search-tasks';
 import { AuthenticateUser } from './components/pages/authenticate-user/authenticate-user';
 import { authGuard } from './guards/auth-guard';
 import { CreateUser } from './components/pages/create-user/create-user';
+import { EditTasks } from './components/pages/edit-tasks/edit-tasks';
 
 export const routes: Routes = [
     {
@@ -20,6 +21,11 @@ export const routes: Routes = [
     {
         path: 'pages/search-tasks',
         component: SearchTasks,
+        canActivate: [authGuard]
+    },
+    {
+        path: 'pages/edit-tasks/:id',
+        component: EditTasks,
         canActivate: [authGuard]
     },
     {

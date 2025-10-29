@@ -16,15 +16,8 @@
             <input type="date" class="form-control border-0 shadow-sm rounded-pill px-3" formControlName="maxDate" />
           </div>
           <div class="col">
-            <input type="submit" class="btn w-100 text-white fw-bold rounded-pill py-2"
-              value="Search tasks"
-              [ngClass]="{
-                'btn-success': formConsulta.valid,
-                'btn-secondary': formConsulta.invalid
-              }"
-              [disabled]="formConsulta.invalid"
-              style="background: #4e54c8; border: none;"
-            />
+            <input type="submit" class="btn w-100 text-white fw-bold rounded-pill py-2" value="Search tasks"[ngClass]="
+            {'btn-success': formConsulta.valid, 'btn-secondary': formConsulta.invalid}" [disabled]="formConsulta.invalid" style="background: #4e54c8; border: none;" />
           </div>
         </div>
       </form>
@@ -49,9 +42,9 @@
               <div *ngIf="item.finished" class="badge bg-success">YES</div>
               <div *ngIf="!item.finished" class="badge bg-danger">NO</div>
             </td>
-            <td>{{ item.category.name }}</td>
+            <td>{{ item.categoryName }}</td>
             <td>
-              <button class="btn btn-outline-primary btn-sm me-1">Edit</button>
+              <button class="btn btn-outline-primary btn-sm me-1" (click)="editTask(item)">Edit</button>
               <button class="btn btn-outline-danger btn-sm me-1" (click)="deleteTask(item.id)">Delete</button>
             </td>
           </tr>

@@ -12,8 +12,10 @@ export class Navbar {
 
   ngOnInit() {
     const authData = sessionStorage.getItem('auth');
-    const user = JSON.parse(authData!);
-    this.name.set(user.name);
+    const user = authData ? JSON.parse(authData) : null;
+    if (user) {
+      this.name.set(user.name);
+    }
   }
 
   logout() {
